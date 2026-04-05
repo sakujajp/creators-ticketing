@@ -1,5 +1,5 @@
 {
-    "name": "daacreators/creators-ticketing",
+    "name": "sakujajp/creators-ticketing",
     "description": "A robust and dynamic ticketing system for Filament",
     "type": "library",
     "license": "MIT",
@@ -10,9 +10,10 @@
         }
     ],
     "require": {
-        "php": "^8.2",
-        "filament/filament": "^4.1|^5.1",
-        "illuminate/contracts": "^11.28|^12.0"
+        "php": "^8.3",
+        "filament/filament": "^5.0",
+        "illuminate/contracts": "^13.0",
+        "livewire/livewire": "^4.0"
     },
     "autoload": {
         "psr-4": {

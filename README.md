@@ -55,10 +55,10 @@ A robust and dynamic ticketing system plugin for Filament, providing a complete 
 
 ## Requirements
 
-- PHP 8.2 or higher
-- Laravel 11.x|12.x
-- Filament 4.1.7|5.1 or higher
-- Livewire 3.x
+- PHP 8.3 or higher
+- Laravel 11.x|12.x|13.x
+- Filament 5.0 or higher
+- Livewire 4.0 or higher
 
 ## Installation
 

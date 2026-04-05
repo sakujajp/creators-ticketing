@@ -89,7 +89,7 @@ class SpamFilterResource extends Resource
                 ->label(__('creators-ticketing::resources.spam_filter.values'))
                 ->required()
                 ->placeholder(__('creators-ticketing::resources.spam_filter.values_placeholder'))
-                ->helperText(fn (Get $get) => match ($get('type')) {
+                ->helperText(fn (Get $get) => match ($get->get('type')) {
                     'keyword' => __('creators-ticketing::resources.spam_filter.helpers.keyword'),
                     'email' => __('creators-ticketing::resources.spam_filter.helpers.email'),
                     'ip' => __('creators-ticketing::resources.spam_filter.helpers.ip'),
@@ -101,7 +101,7 @@ class SpamFilterResource extends Resource
             Toggle::make('case_sensitive')
                 ->label(__('creators-ticketing::resources.spam_filter.case_sensitive'))
                 ->default(false)
-                ->visible(fn (Get $get) => in_array($get('type'), ['keyword', 'email'])),
+                ->visible(fn (Get $get) => in_array($get->get('type'), ['keyword', 'email'])),
             
             TextInput::make('priority')
                 ->label(__('creators-ticketing::resources.spam_filter.priority'))

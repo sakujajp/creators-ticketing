@@ -31,7 +31,9 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
 use Filament\Tables\Filters\TernaryFilter;
 use daacreators\CreatorsTicketing\Models\Form;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
+use Illuminate\Database\Eloquent\Model;
 use daacreators\CreatorsTicketing\Models\Department;
 use daacreators\CreatorsTicketing\Models\TicketStatus;
 use daacreators\CreatorsTicketing\Enums\TicketPriority;
@@ -79,8 +81,8 @@ class AutomationRuleResource extends Resource
         $deptTableName = $tablePrefix . 'departments';
         $pivotTableName = $tablePrefix . 'department_users';
 
-        $getFilteredUserOptions = function (callable $get) use ($userModel, $allowedUserField, $allowedUserValues, $pivotTableName) {
-            $selectedDepartmentIds = $get('conditions.department_id');
+        $getFilteredUserOptions = function (Get $get) use ($userModel, $allowedUserField, $allowedUserValues, $pivotTableName) {
+            $selectedDepartmentIds = $get->get('conditions.department_id');
             $allUsers = collect();
             
             $userInstance = new $userModel;
@@ -138,7 +140,7 @@ class AutomationRuleResource extends Resource
                                     }
                                     
                                     $maxOrder = AutomationRule::where('trigger_event', $state)->max('execution_order');
-                                    $set('execution_order', $maxOrder !== null ? $maxOrder + 1 : 0);
+                                    $set->set('execution_order', $maxOrder !== null ? $maxOrder + 1 : 0);
                                 })
                                 ->options([
                                     'ticket_created' => __('creators-ticketing::resources.automation.triggers.ticket_created'),
@@ -174,16 +176,16 @@ class AutomationRuleResource extends Resource
                                         ->options(Department::pluck('name', 'id'))
                                         ->searchable()
                                         ->preload()
-                                        ->reactive()
-                                        ->afterStateUpdated(fn (callable $set) => $set('conditions.form_id', null))
-                                        ->afterStateUpdated(fn (callable $set) => $set('conditions.assignee_id', null))
-                                        ->afterStateUpdated(fn (callable $set) => $set('actions.assign_to', null)),
+                                        ->live()
+                                        ->afterStateUpdated(fn (Set $set) => $set->set('conditions.form_id', null))
+                                        ->afterStateUpdated(fn (Set $set) => $set->set('conditions.assignee_id', null))
+                                        ->afterStateUpdated(fn (Set $set) => $set->set('actions.assign_to', null)),
                                     
                                     Select::make('conditions.form_id')
                                         ->label(__('creators-ticketing::resources.automation.conditions.form'))
                                         ->multiple()
-                                        ->options(function (callable $get) use ($deptTableName) {
-                                            $selectedDepartmentIds = $get('conditions.department_id');
+                                        ->options(function (Get $get) use ($deptTableName) {
+                                            $selectedDepartmentIds = $get->get('conditions.department_id');
                                             if (empty($selectedDepartmentIds)) {
                                                 return Form::pluck('name', 'id');
                                             }
@@ -209,7 +211,7 @@ class AutomationRuleResource extends Resource
                                     Select::make('conditions.assignee_id')
                                         ->label(__('creators-ticketing::resources.automation.conditions.assignee'))
                                         ->multiple()
-                                        ->options(fn (callable $get): array => [
+                                        ->options(fn (Get $get): array => [
                                             'unassigned' => __('creators-ticketing::resources.automation.options.unassigned'),
                                             'assigned' => __('creators-ticketing::resources.automation.options.any_assigned'),
                                         ] + $getFilteredUserOptions($get))
@@ -249,13 +251,13 @@ class AutomationRuleResource extends Resource
                                         ->multiple()
                                         ->options(TicketStatus::pluck('name', 'id'))
                                         ->searchable()
-                                        ->visible(fn (callable $get) => $get('trigger_event') === 'status_changed'),
+                                        ->visible(fn (Get $get) => $get->get('trigger_event') === 'status_changed'),
                                 
                                     Select::make('conditions.old_priority')
                                         ->label(__('creators-ticketing::resources.automation.conditions.previous_priority'))
                                         ->multiple()
                                         ->options(TicketPriority::class)
-                                        ->visible(fn (callable $get) => $get('trigger_event') === 'priority_changed'),
+                                        ->visible(fn (Get $get) => $get->get('trigger_event') === 'priority_changed'),
                             ])->columns(2),
                     ]),
                 
@@ -266,7 +268,7 @@ class AutomationRuleResource extends Resource
                             ->schema([
                                 Select::make('actions.assign_to')
                                     ->label(__('creators-ticketing::resources.automation.actions.assign_to'))
-                                    ->options(fn (callable $get): array => [
+                                    ->options(fn (Get $get): array => [
                                         'unassigned' => __('creators-ticketing::resources.automation.options.leave_unassigned'),
                                         'round_robin' => __('creators-ticketing::resources.automation.options.round_robin'),
                                         'least_loaded' => __('creators-ticketing::resources.automation.options.least_loaded'),
@@ -470,7 +472,7 @@ public static function table(Table $table): Table
 
                             Textarea::make('error_message')
                                 ->label(__('creators-ticketing::resources.logs.error'))
-                                ->visible(fn ($get) => !empty($get('error_message')))
+                                ->visible(fn (Get $get) => !empty($get->get('error_message')))
                                 ->disabled()
                                 ->rows(2)
                                 ->columnSpanFull()

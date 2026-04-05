@@ -188,7 +188,7 @@ class TicketResource extends Resource
                         Select::make('form_id')
                             ->label(__('creators-ticketing::resources.ticket.form_label') ?? 'Ticket Form')
                             ->options(function (Get $get) {
-                                $departmentId = $get->get('department_id');
+                                $departmentId = $get('department_id');
                                 if (!$departmentId)
                                     return [];
 
@@ -203,19 +203,19 @@ class TicketResource extends Resource
                                     ->pluck($table . '.name', $table . '.id')
                                     ->toArray();
                             })
-                            ->required(fn(Get $get) => !empty(Department::find($get->get('department_id'))?->forms()->exists()))
+                            ->required(fn(Get $get) => !empty(Department::find($get('department_id'))?->forms()->exists()))
                             ->visible(
                                 fn(Get $get, ?Model $record) =>
                                 ($record === null || $record->form_id === null) &&
-                                $get->get('department_id') !== null &&
-                                Department::find($get->get('department_id'))?->forms()->count() > 1
+                                $get('department_id') !== null &&
+                                Department::find($get('department_id'))?->forms()->count() > 1
                             )
                             ->live()
                             ->afterStateUpdated(function (Set $set) {
                                 $set->set('custom_fields', []);
                             })
                             ->default(function (Get $get) {
-                                $departmentId = $get->get('department_id');
+                                $departmentId = $get('department_id');
                                 $department = Department::find($departmentId);
                                 if (!$department)
                                     return null;
@@ -228,10 +228,10 @@ class TicketResource extends Resource
                             }),
 
                         Group::make()
-                            ->schema(fn(Get $get, ?Model $record): array => static::getDynamicFormFields($record, $get->get('department_id'), $get->get('form_id'), $permissions))
+                            ->schema(fn(Get $get, ?Model $record): array => static::getDynamicFormFields($record, $get('department_id'), $get('form_id'), $permissions))
                             ->visible(
                                 fn(?Model $record, Get $get) =>
-                                $record !== null || $get->get('department_id') !== null
+                                $record !== null || $get('department_id') !== null
                             )
                             ->columnSpanFull(),
                     ]),
@@ -285,7 +285,7 @@ class TicketResource extends Resource
                             ->visible(
                                 fn(?Model $record, Get $get) =>
                                 $permissions['is_admin'] ||
-                                ($record === null && $get->get('department_id') && ($permissions['permissions'][$get->get('department_id')]['can_assign_tickets'] ?? false)) ||
+                                ($record === null && $get('department_id') && ($permissions['permissions'][$get('department_id')]['can_assign_tickets'] ?? false)) ||
                                 ($record instanceof Ticket && in_array($record->department_id, $permissions['departments']) && ($permissions['permissions'][$record->department_id]['can_assign_tickets'] ?? false))
                             )
                             ->disabled(
@@ -309,7 +309,7 @@ class TicketResource extends Resource
                             ->visible(
                                 fn(?Model $record, Get $get) =>
                                 $permissions['is_admin'] ||
-                                ($record === null && $get->get('department_id') && ($permissions['permissions'][$get->get('department_id')]['can_change_status'] ?? false)) ||
+                                ($record === null && $get('department_id') && ($permissions['permissions'][$get('department_id')]['can_change_status'] ?? false)) ||
                                 ($record instanceof Ticket && in_array($record->department_id, $permissions['departments']) && ($permissions['permissions'][$record->department_id]['can_change_status'] ?? false))
                             )
                             ->disabled(
@@ -327,7 +327,7 @@ class TicketResource extends Resource
                             ->visible(
                                 fn(?Model $record, Get $get) =>
                                 $permissions['is_admin'] ||
-                                ($record === null && $get->get('department_id') && ($permissions['permissions'][$get->get('department_id')]['can_change_priority'] ?? false)) ||
+                                ($record === null && $get('department_id') && ($permissions['permissions'][$get('department_id')]['can_change_priority'] ?? false)) ||
                                 ($record instanceof Ticket && in_array($record->department_id, $permissions['departments']) && ($permissions['permissions'][$record->department_id]['can_change_priority'] ?? false))
                             )
                             ->disabled(

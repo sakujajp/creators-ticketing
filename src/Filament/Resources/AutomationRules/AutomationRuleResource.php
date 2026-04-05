@@ -82,7 +82,7 @@ class AutomationRuleResource extends Resource
         $pivotTableName = $tablePrefix . 'department_users';
 
         $getFilteredUserOptions = function (Get $get) use ($userModel, $allowedUserField, $allowedUserValues, $pivotTableName) {
-            $selectedDepartmentIds = $get->get('conditions.department_id');
+            $selectedDepartmentIds = $get('conditions.department_id');
             $allUsers = collect();
 
             $userInstance = new $userModel;
@@ -185,7 +185,7 @@ class AutomationRuleResource extends Resource
                                         ->label(__('creators-ticketing::resources.automation.conditions.form'))
                                         ->multiple()
                                         ->options(function (Get $get) use ($deptTableName) {
-                                            $selectedDepartmentIds = $get->get('conditions.department_id');
+                                            $selectedDepartmentIds = $get('conditions.department_id');
                                             if (empty($selectedDepartmentIds)) {
                                                 return Form::pluck('name', 'id');
                                             }
@@ -253,13 +253,13 @@ class AutomationRuleResource extends Resource
                                         ->multiple()
                                         ->options(TicketStatus::pluck('name', 'id'))
                                         ->searchable()
-                                        ->visible(fn(Get $get) => $get->get('trigger_event') === 'status_changed'),
+                                        ->visible(fn(Get $get) => $get('trigger_event') === 'status_changed'),
 
                                     Select::make('conditions.old_priority')
                                         ->label(__('creators-ticketing::resources.automation.conditions.previous_priority'))
                                         ->multiple()
                                         ->options(TicketPriority::class)
-                                        ->visible(fn(Get $get) => $get->get('trigger_event') === 'priority_changed'),
+                                        ->visible(fn(Get $get) => $get('trigger_event') === 'priority_changed'),
                                 ])->columns(2),
                         ]),
 

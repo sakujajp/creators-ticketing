@@ -954,7 +954,7 @@ class ViewTicket extends ViewRecord
                         ->placeholder(__('creators-ticketing::resources.ticket.actions.transfer_agent_placeholder'))
                         ->searchable()
                         ->getSearchResultsUsing(function (string $search, Get $get) use ($userModel) {
-                            $departmentId = $get->get('department');
+                            $departmentId = $get('department');
 
                             if (!$departmentId) {
                                 return [];
@@ -987,7 +987,7 @@ class ViewTicket extends ViewRecord
                             return $user ? UserNameResolver::resolve($user) . ' - ' . $user->email : null;
                         })
                         ->options(function (Get $get) use ($userModel): array {
-                            $departmentId = $get->get('department');
+                            $departmentId = $get('department');
 
                             if (!$departmentId) {
                                 return [];
@@ -999,7 +999,7 @@ class ViewTicket extends ViewRecord
                                 ->toArray() ?? [];
                         })
                         ->default(function (Get $get) {
-                            $departmentId = $get->get('department');
+                            $departmentId = $get('department');
                             $currentAssigneeId = $this->record->assignee_id;
 
                             if (!$currentAssigneeId || !$departmentId) {
@@ -1017,7 +1017,7 @@ class ViewTicket extends ViewRecord
 
                             return $isInNewDept ? $currentAssigneeId : null;
                         })
-                        ->preload(fn(Get $get) => $get->get('department') !== null)
+                        ->preload(fn(Get $get) => $get('department') !== null)
                         ->helperText(__('creators-ticketing::resources.ticket.actions.transfer_agent_helper'))
                         ->native(false),
                 ])

@@ -123,7 +123,7 @@ class FieldsRelationManager extends RelationManager
                         $set->set('options', null);
                     }
 
-                    if (in_array($state, ['file', 'file_multiple']) && empty($get->get('validation_rules'))) {
+                    if (in_array($state, ['file', 'file_multiple']) && empty($get('validation_rules'))) {
                         $set->set('validation_rules', 'mimes:jpg,jpeg,png,pdf,doc,docx|max:5120');
                     }
                 }),
@@ -132,7 +132,7 @@ class FieldsRelationManager extends RelationManager
                 ->label(__('creators-ticketing::resources.field.options'))
                 ->keyLabel(__('creators-ticketing::resources.field.options_key'))
                 ->valueLabel(__('creators-ticketing::resources.field.options_value'))
-                ->visible(fn(Get $get) => in_array($get->get('type'), ['select', 'radio']))
+                ->visible(fn(Get $get) => in_array($get('type'), ['select', 'radio']))
                 ->helperText(__('creators-ticketing::resources.field.options_helper'))
                 ->columnSpanFull(),
 
@@ -151,12 +151,12 @@ class FieldsRelationManager extends RelationManager
                 ->placeholder('e.g. mimes:jpg,png|max:2048')
                 ->rows(3)
                 ->columnSpanFull()
-                ->visible(fn(Get $get) => !empty($get->get('type'))),
+                ->visible(fn(Get $get) => !empty($get('type'))),
 
             Placeholder::make('validation_examples')
                 ->label(__('creators-ticketing::resources.field.validation_helper'))
-                ->content(fn(Get $get) => $this->getValidationExamples($get->get('type')))
-                ->visible(fn(Get $get) => !empty($get->get('type')))
+                ->content(fn(Get $get) => $this->getValidationExamples($get('type')))
+                ->visible(fn(Get $get) => !empty($get('type')))
                 ->columnSpanFull(),
 
             TextInput::make('order')

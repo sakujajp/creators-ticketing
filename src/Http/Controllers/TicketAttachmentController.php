@@ -1,13 +1,13 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Http\Controllers;
+namespace sakujajp\CreatorsTicketing\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Filament\Facades\Filament;
-use daacreators\CreatorsTicketing\Models\Ticket;
+use sakujajp\CreatorsTicketing\Models\Ticket;
 
 class TicketAttachmentController extends Controller
 {

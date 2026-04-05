@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\Departments;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\Departments;
 
 use BackedEnum;
 use Filament\Tables;
@@ -19,19 +19,19 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
-use daacreators\CreatorsTicketing\Models\Form;
+use sakujajp\CreatorsTicketing\Models\Form;
 use Filament\Schemas\Components\Utilities\Set;
-use daacreators\CreatorsTicketing\Models\Department;
-use daacreators\CreatorsTicketing\Support\UserNameResolver;
-use daacreators\CreatorsTicketing\Traits\HasTicketingNavGroup;
-use daacreators\CreatorsTicketing\Traits\HasNavigationVisibility;
-use daacreators\CreatorsTicketing\Filament\Resources\Departments\Pages;
-use daacreators\CreatorsTicketing\Filament\Resources\Departments\RelationManagers\AgentsRelationManager;
+use sakujajp\CreatorsTicketing\Models\Department;
+use sakujajp\CreatorsTicketing\Support\UserNameResolver;
+use sakujajp\CreatorsTicketing\Traits\HasTicketingNavGroup;
+use sakujajp\CreatorsTicketing\Traits\HasNavigationVisibility;
+use sakujajp\CreatorsTicketing\Filament\Resources\Departments\Pages;
+use sakujajp\CreatorsTicketing\Filament\Resources\Departments\RelationManagers\AgentsRelationManager;
 
 class DepartmentResource extends Resource
 {
     use HasNavigationVisibility, HasTicketingNavGroup;
-    
+
     protected static ?string $model = Department::class;
 
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-building-office-2';
@@ -59,7 +59,7 @@ class DepartmentResource extends Resource
                 ->required()
                 ->maxLength(255)
                 ->live(onBlur: true)
-                ->afterStateUpdated(fn (Set $set, ?string $state) => $set->set('slug', Str::slug($state))),
+                ->afterStateUpdated(fn(Set $set, ?string $state) => $set->set('slug', Str::slug($state))),
 
             TextInput::make('slug')
                 ->label(__('creators-ticketing::resources.department.slug'))
@@ -116,11 +116,12 @@ class DepartmentResource extends Resource
                     ->listWithLineBreaks()
                     ->expandableLimitedList()
                     ->badge()
-                    ->tooltip(fn ($record) =>
+                    ->tooltip(
+                        fn($record) =>
                         $record->forms->pluck('name')->implode(', ')
                     )
                     ->color('info')
-                    ->separator(', '), 
+                    ->separator(', '),
 
                 TextColumn::make('agents')
                     ->label(__('creators-ticketing::resources.department.agents'))
@@ -128,23 +129,25 @@ class DepartmentResource extends Resource
                     ->listWithLineBreaks()
                     ->expandableLimitedList()
                     ->badge()
-                    ->state(fn ($record) => 
-                        $record->agents->map(fn ($agent) => UserNameResolver::resolve($agent))->toArray()
+                    ->state(
+                        fn($record) =>
+                        $record->agents->map(fn($agent) => UserNameResolver::resolve($agent))->toArray()
                     )
-                    ->tooltip(fn ($record) =>
-                        $record->agents->map(fn ($agent) => UserNameResolver::resolve($agent))->implode(', ')
+                    ->tooltip(
+                        fn($record) =>
+                        $record->agents->map(fn($agent) => UserNameResolver::resolve($agent))->implode(', ')
                     )
-                    ->color('success'), 
+                    ->color('success'),
 
                 TextColumn::make('visibility')
                     ->label(__('creators-ticketing::resources.department.visibility'))
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'public' => __('creators-ticketing::resources.department.visibility_options.public'),
                         'internal' => __('creators-ticketing::resources.department.visibility_options.internal'),
                         default => $state,
                     })
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'public' => 'success',
                         'internal' => 'warning',
                         default => 'gray',

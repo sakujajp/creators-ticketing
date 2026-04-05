@@ -1,20 +1,20 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Observers;
+namespace sakujajp\CreatorsTicketing\Observers;
 
 use App\Models\User;
 use Illuminate\Support\Str;
-use daacreators\CreatorsTicketing\Models\Ticket;
-use daacreators\CreatorsTicketing\Events\TicketClosed;
-use daacreators\CreatorsTicketing\Models\TicketStatus;
-use daacreators\CreatorsTicketing\Enums\TicketPriority;
-use daacreators\CreatorsTicketing\Events\TicketCreated;
-use daacreators\CreatorsTicketing\Events\TicketDeleted;
-use daacreators\CreatorsTicketing\Events\TicketAssigned;
-use daacreators\CreatorsTicketing\Support\UserNameResolver;
-use daacreators\CreatorsTicketing\Events\TicketStatusChanged;
-use daacreators\CreatorsTicketing\Services\AutomationService;
-use daacreators\CreatorsTicketing\Events\TicketPriorityChanged;
+use sakujajp\CreatorsTicketing\Models\Ticket;
+use sakujajp\CreatorsTicketing\Events\TicketClosed;
+use sakujajp\CreatorsTicketing\Models\TicketStatus;
+use sakujajp\CreatorsTicketing\Enums\TicketPriority;
+use sakujajp\CreatorsTicketing\Events\TicketCreated;
+use sakujajp\CreatorsTicketing\Events\TicketDeleted;
+use sakujajp\CreatorsTicketing\Events\TicketAssigned;
+use sakujajp\CreatorsTicketing\Support\UserNameResolver;
+use sakujajp\CreatorsTicketing\Events\TicketStatusChanged;
+use sakujajp\CreatorsTicketing\Services\AutomationService;
+use sakujajp\CreatorsTicketing\Events\TicketPriorityChanged;
 
 class TicketObserver
 {
@@ -61,7 +61,7 @@ class TicketObserver
         if ($ticket->isDirty('assignee_id')) {
             $oldAssigneeId = $ticket->getOriginal('assignee_id');
             $newAssigneeId = $ticket->assignee_id;
-            
+
             $oldAssignee = $oldAssigneeId ? User::find($oldAssigneeId) : null;
             $newAssignee = $newAssigneeId ? User::find($newAssigneeId) : null;
 
@@ -76,7 +76,7 @@ class TicketObserver
         if ($ticket->isDirty('ticket_status_id')) {
             $oldStatusId = $ticket->getOriginal('ticket_status_id');
             $newStatusId = $ticket->ticket_status_id;
-            
+
             $oldStatus = TicketStatus::find($oldStatusId);
             $newStatus = TicketStatus::find($newStatusId);
 
@@ -91,7 +91,7 @@ class TicketObserver
         if ($ticket->isDirty('priority')) {
             $oldPriority = $ticket->getOriginal('priority');
             $newPriority = $ticket->priority;
-            
+
             if ($oldPriority instanceof TicketPriority) {
                 $oldPriority = $oldPriority->getLabel();
             }
@@ -126,7 +126,7 @@ class TicketObserver
         if ($ticket->wasChanged('ticket_status_id')) {
             $oldStatusId = $ticket->getOriginal('ticket_status_id');
             $newStatusId = $ticket->ticket_status_id;
-            
+
             $oldStatus = $oldStatusId ? TicketStatus::find($oldStatusId) : null;
             $newStatus = TicketStatus::find($newStatusId);
 
@@ -135,7 +135,7 @@ class TicketObserver
             if ($newStatus && $newStatus->is_closing_status) {
                 event(new TicketClosed($ticket, auth()->user()));
             }
-            
+
             $context = [
                 'old_status_id' => $oldStatusId,
                 'new_status_id' => $newStatusId,
@@ -149,14 +149,14 @@ class TicketObserver
             $newPriority = $ticket->priority;
 
             event(new TicketPriorityChanged($ticket, $oldPriority, $newPriority, auth()->user()));
-        
+
             $context = [
-                'old_priority' => $oldPriorityVal, 
+                'old_priority' => $oldPriorityVal,
                 'new_priority' => $newPriority->value,
             ];
             app(AutomationService::class)->processAutomations($ticket, 'priority_changed', $context);
         }
-        
+
         $changes = $ticket->getChanges();
         app(AutomationService::class)->processAutomations($ticket, 'ticket_updated', $changes);
     }

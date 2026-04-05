@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\Tickets\RelationManagers;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\Tickets\RelationManagers;
 
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -11,17 +11,17 @@ use Filament\Tables\Columns\Layout\Split;
 use Filament\Resources\RelationManagers\RelationManager;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\On;
-use daacreators\CreatorsTicketing\Support\UserNameResolver;
+use sakujajp\CreatorsTicketing\Support\UserNameResolver;
 
 class InternalNotesRelationManager extends RelationManager
 {
     protected static string $relationship = 'internalNotes';
-    
+
     #[On('internal-note-created')]
     public function refresh(): void
     {
     }
-    
+
     public static function getTitle(Model $ownerRecord, string $pageClass): string
     {
         return __('creators-ticketing::resources.internal_note.title');

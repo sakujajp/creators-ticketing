@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\SpamLogs;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\SpamLogs;
 
 use BackedEnum;
 use Filament\Tables\Table;
@@ -14,18 +14,18 @@ use Filament\Schemas\Components\Section;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\KeyValueEntry;
-use daacreators\CreatorsTicketing\Models\SpamLog;
-use daacreators\CreatorsTicketing\Support\UserNameResolver;
-use daacreators\CreatorsTicketing\Traits\HasTicketingNavGroup;
-use daacreators\CreatorsTicketing\Traits\HasTicketPermissions;
-use daacreators\CreatorsTicketing\Filament\Resources\SpamLogs\Pages;
+use sakujajp\CreatorsTicketing\Models\SpamLog;
+use sakujajp\CreatorsTicketing\Support\UserNameResolver;
+use sakujajp\CreatorsTicketing\Traits\HasTicketingNavGroup;
+use sakujajp\CreatorsTicketing\Traits\HasTicketPermissions;
+use sakujajp\CreatorsTicketing\Filament\Resources\SpamLogs\Pages;
 
 class SpamLogResource extends Resource
 {
     use HasTicketPermissions, HasTicketingNavGroup;
 
     protected static ?string $model = SpamLog::class;
-    
+
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-document-text';
 
     public static function getNavigationLabel(): string
@@ -62,7 +62,7 @@ class SpamLogResource extends Resource
     {
         return false;
     }
-    
+
     public static function table(Table $table): Table
     {
         return $table
@@ -71,24 +71,24 @@ class SpamLogResource extends Resource
                     ->label(__('creators-ticketing::resources.spam_log.date'))
                     ->dateTime()
                     ->sortable(),
-                
+
                 TextColumn::make('user.name')
                     ->label(__('creators-ticketing::resources.spam_log.user'))
-                    ->formatStateUsing(fn ($record) => $record->user ? UserNameResolver::resolve($record->user) : __('creators-ticketing::resources.spam_log.guest'))
+                    ->formatStateUsing(fn($record) => $record->user ? UserNameResolver::resolve($record->user) : __('creators-ticketing::resources.spam_log.guest'))
                     ->searchable(),
-                
+
                 TextColumn::make('email')
                     ->label(__('creators-ticketing::resources.spam_log.email'))
                     ->searchable(),
-                
+
                 TextColumn::make('ip_address')
                     ->label(__('creators-ticketing::resources.spam_log.ip'))
                     ->searchable(),
-                
+
                 TextColumn::make('filter_type')
                     ->label(__('creators-ticketing::resources.spam_log.filter_type'))
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'keyword' => __('creators-ticketing::resources.spam_filter.types.keyword'),
                         'email' => __('creators-ticketing::resources.spam_filter.types.email'),
                         'ip' => __('creators-ticketing::resources.spam_filter.types.ip'),
@@ -96,7 +96,7 @@ class SpamLogResource extends Resource
                         'rate_limit' => __('creators-ticketing::resources.spam_log.rate_limit'),
                         default => $state,
                     })
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'keyword' => 'warning',
                         'email' => 'danger',
                         'ip' => 'info',
@@ -104,24 +104,24 @@ class SpamLogResource extends Resource
                         'rate_limit' => 'gray',
                         default => 'gray',
                     }),
-                
+
                 TextColumn::make('action_taken')
                     ->label(__('creators-ticketing::resources.spam_log.action'))
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'blocked' => __('creators-ticketing::resources.spam_log.actions.blocked'),
                         default => $state,
                     })
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'blocked' => 'danger',
                         default => 'gray',
                     }),
-                
+
                 TextColumn::make('matched_value')
                     ->label(__('creators-ticketing::resources.spam_log.matched_value'))
                     ->limit(30)
                     ->toggleable(isToggledHiddenByDefault: true),
-                
+
                 TextColumn::make('filter_rule')
                     ->label(__('creators-ticketing::resources.spam_log.filter_rule'))
                     ->state(function ($record) {
@@ -130,8 +130,10 @@ class SpamLogResource extends Resource
                         }
                         $values = $record->spamFilter->values;
                         $count = count($values);
-                        if ($count === 0) return '-';
-                        if ($count === 1) return $values[0];
+                        if ($count === 0)
+                            return '-';
+                        if ($count === 1)
+                            return $values[0];
                         return $values[0] . ' +' . ($count - 1) . ' more';
                     })
                     ->toggleable(),
@@ -172,21 +174,21 @@ class SpamLogResource extends Resource
                         TextEntry::make('created_at')
                             ->label(__('creators-ticketing::resources.spam_log.date'))
                             ->dateTime(),
-                        
+
                         TextEntry::make('user.name')
                             ->label(__('creators-ticketing::resources.spam_log.user'))
-                            ->formatStateUsing(fn ($record) => $record->user ? UserNameResolver::resolve($record->user) : __('creators-ticketing::resources.spam_log.guest')),
-                        
+                            ->formatStateUsing(fn($record) => $record->user ? UserNameResolver::resolve($record->user) : __('creators-ticketing::resources.spam_log.guest')),
+
                         TextEntry::make('email')
                             ->label(__('creators-ticketing::resources.spam_log.email')),
-                        
+
                         TextEntry::make('ip_address')
                             ->label(__('creators-ticketing::resources.spam_log.ip')),
-                        
+
                         TextEntry::make('filter_type')
                             ->label(__('creators-ticketing::resources.spam_log.filter_type'))
                             ->badge()
-                            ->formatStateUsing(fn (string $state): string => match ($state) {
+                            ->formatStateUsing(fn(string $state): string => match ($state) {
                                 'keyword' => __('creators-ticketing::resources.spam_filter.types.keyword'),
                                 'email' => __('creators-ticketing::resources.spam_filter.types.email'),
                                 'ip' => __('creators-ticketing::resources.spam_filter.types.ip'),
@@ -194,7 +196,7 @@ class SpamLogResource extends Resource
                                 'rate_limit' => __('creators-ticketing::resources.spam_log.rate_limit'),
                                 default => $state,
                             })
-                            ->color(fn (string $state): string => match ($state) {
+                            ->color(fn(string $state): string => match ($state) {
                                 'keyword' => 'warning',
                                 'email' => 'danger',
                                 'ip' => 'info',
@@ -202,19 +204,19 @@ class SpamLogResource extends Resource
                                 'rate_limit' => 'gray',
                                 default => 'gray',
                             }),
-                        
+
                         TextEntry::make('action_taken')
                             ->label(__('creators-ticketing::resources.spam_log.action'))
                             ->badge()
                             ->color('danger'),
-                        
+
                         TextEntry::make('matched_value')
                             ->label(__('creators-ticketing::resources.spam_log.matched_value'))
                             ->placeholder(__('creators-ticketing::resources.spam_log.no_match')),
-                        
+
                         TextEntry::make('spamFilter.values')
                             ->label(__('creators-ticketing::resources.spam_log.filter_rule'))
-                            ->formatStateUsing(fn ($state) => is_array($state) ? implode(', ', $state) : $state)
+                            ->formatStateUsing(fn($state) => is_array($state) ? implode(', ', $state) : $state)
                             ->placeholder(__('creators-ticketing::resources.spam_log.no_filter')),
 
                         KeyValueEntry::make('ticket_data')

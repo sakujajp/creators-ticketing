@@ -2,7 +2,7 @@
 module.exports = {
     content: [
         './resources/**/*.blade.php',
-        './vendor/daacreators/creators-ticketing/resources/views/**/*.blade.php',
+        './vendor/sakujajp/creators-ticketing/resources/views/**/*.blade.php',
         './vendor/filament/**/*.blade.php',
         './app/**/*.php',
     ],

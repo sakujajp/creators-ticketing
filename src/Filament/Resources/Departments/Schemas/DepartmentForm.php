@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\Departments\Schemas;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\Departments\Schemas;
 
 use Filament\Schemas\Schema;
 

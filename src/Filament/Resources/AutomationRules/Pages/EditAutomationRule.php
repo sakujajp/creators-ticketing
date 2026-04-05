@@ -1,10 +1,10 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\AutomationRules\Pages;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\AutomationRules\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
-use daacreators\CreatorsTicketing\Filament\Resources\AutomationRules\AutomationRuleResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\AutomationRules\AutomationRuleResource;
 
 class EditAutomationRule extends EditRecord
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\Forms\Pages;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\Forms\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
-use daacreators\CreatorsTicketing\Filament\Resources\Forms\FormResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\Forms\FormResource;
 
 class EditForm extends EditRecord
 {

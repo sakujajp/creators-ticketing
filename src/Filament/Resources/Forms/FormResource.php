@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\Forms;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\Forms;
 
 use BackedEnum;
 use Filament\Tables;
@@ -18,17 +18,17 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Filters\TernaryFilter;
-use daacreators\CreatorsTicketing\Models\Form;
+use sakujajp\CreatorsTicketing\Models\Form;
 use Filament\Schemas\Components\Utilities\Set;
-use daacreators\CreatorsTicketing\Traits\HasTicketingNavGroup;
-use daacreators\CreatorsTicketing\Filament\Resources\Forms\Pages;
-use daacreators\CreatorsTicketing\Traits\HasNavigationVisibility;
-use daacreators\CreatorsTicketing\Filament\Resources\Forms\RelationManagers\FieldsRelationManager;
+use sakujajp\CreatorsTicketing\Traits\HasTicketingNavGroup;
+use sakujajp\CreatorsTicketing\Filament\Resources\Forms\Pages;
+use sakujajp\CreatorsTicketing\Traits\HasNavigationVisibility;
+use sakujajp\CreatorsTicketing\Filament\Resources\Forms\RelationManagers\FieldsRelationManager;
 
 class FormResource extends Resource
 {
     use HasNavigationVisibility, HasTicketingNavGroup;
-    
+
     protected static ?string $model = Form::class;
 
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-document-duplicate';
@@ -51,7 +51,7 @@ class FormResource extends Resource
                 ->required()
                 ->maxLength(255)
                 ->live(onBlur: true)
-                ->afterStateUpdated(fn (Set $set, ?string $state) => $set->set('slug', Str::slug($state))),
+                ->afterStateUpdated(fn(Set $set, ?string $state) => $set->set('slug', Str::slug($state))),
 
             TextInput::make('slug')
                 ->label(__('creators-ticketing::resources.form.slug'))

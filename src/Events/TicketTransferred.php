@@ -1,11 +1,11 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Events;
+namespace sakujajp\CreatorsTicketing\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use daacreators\CreatorsTicketing\Models\Ticket;
-use daacreators\CreatorsTicketing\Models\Department;
+use sakujajp\CreatorsTicketing\Models\Ticket;
+use sakujajp\CreatorsTicketing\Models\Department;
 
 class TicketTransferred
 {
@@ -16,5 +16,6 @@ class TicketTransferred
         public Department $oldDepartment,
         public Department $newDepartment,
         public mixed $transferredBy
-    ) {}
+    ) {
+    }
 }

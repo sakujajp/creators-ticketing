@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Traits;
+namespace sakujajp\CreatorsTicketing\Traits;
 
 use Filament\Facades\Filament;
 
@@ -14,7 +14,7 @@ trait HasNavigationVisibility
     public static function canAccessNavigation(): bool
     {
         $user = Filament::auth()->user();
-        
+
         if (!$user) {
             return false;
         }

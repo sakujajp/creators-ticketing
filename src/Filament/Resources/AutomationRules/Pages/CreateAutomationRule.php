@@ -1,9 +1,9 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\AutomationRules\Pages;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\AutomationRules\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
-use daacreators\CreatorsTicketing\Filament\Resources\AutomationRules\AutomationRuleResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\AutomationRules\AutomationRuleResource;
 
 class CreateAutomationRule extends CreateRecord
 {

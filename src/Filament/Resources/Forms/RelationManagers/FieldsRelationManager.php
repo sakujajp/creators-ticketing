@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\Forms\RelationManagers;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\Forms\RelationManagers;
 
 use Filament\Forms;
 use Filament\Tables;
@@ -54,11 +54,12 @@ class FieldsRelationManager extends RelationManager
                 TextColumn::make('is_required')
                     ->label(__('creators-ticketing::resources.field.is_required'))
                     ->badge()
-                    ->formatStateUsing(fn ($state) => $state 
-                        ? __('creators-ticketing::resources.field.required') 
+                    ->formatStateUsing(
+                        fn($state) => $state
+                        ? __('creators-ticketing::resources.field.required')
                         : __('creators-ticketing::resources.field.optional')
                     )
-                    ->color(fn ($state) => $state ? 'success' : 'gray'),
+                    ->color(fn($state) => $state ? 'success' : 'gray'),
 
                 TextColumn::make('order')
                     ->label(__('creators-ticketing::resources.field.order'))
@@ -114,14 +115,14 @@ class FieldsRelationManager extends RelationManager
                     'date' => __('creators-ticketing::resources.field.types.date'),
                     'datetime' => __('creators-ticketing::resources.field.types.datetime'),
                     'file' => __('creators-ticketing::resources.field.types.file'),
-                    'file_multiple' =>  __('creators-ticketing::resources.field.types.file_multiple'), 
+                    'file_multiple' => __('creators-ticketing::resources.field.types.file_multiple'),
                 ])
                 ->live()
                 ->afterStateUpdated(function ($state, Set $set, Get $get) {
                     if (!in_array($state, ['select', 'radio'])) {
                         $set->set('options', null);
                     }
-                    
+
                     if (in_array($state, ['file', 'file_multiple']) && empty($get->get('validation_rules'))) {
                         $set->set('validation_rules', 'mimes:jpg,jpeg,png,pdf,doc,docx|max:5120');
                     }
@@ -131,7 +132,7 @@ class FieldsRelationManager extends RelationManager
                 ->label(__('creators-ticketing::resources.field.options'))
                 ->keyLabel(__('creators-ticketing::resources.field.options_key'))
                 ->valueLabel(__('creators-ticketing::resources.field.options_value'))
-                ->visible(fn (Get $get) => in_array($get->get('type'), ['select', 'radio']))
+                ->visible(fn(Get $get) => in_array($get->get('type'), ['select', 'radio']))
                 ->helperText(__('creators-ticketing::resources.field.options_helper'))
                 ->columnSpanFull(),
 
@@ -150,12 +151,12 @@ class FieldsRelationManager extends RelationManager
                 ->placeholder('e.g. mimes:jpg,png|max:2048')
                 ->rows(3)
                 ->columnSpanFull()
-                ->visible(fn (Get $get) => !empty($get->get('type'))),
+                ->visible(fn(Get $get) => !empty($get->get('type'))),
 
             Placeholder::make('validation_examples')
                 ->label(__('creators-ticketing::resources.field.validation_helper'))
-                ->content(fn (Get $get) => $this->getValidationExamples($get->get('type')))
-                ->visible(fn (Get $get) => !empty($get->get('type')))
+                ->content(fn(Get $get) => $this->getValidationExamples($get->get('type')))
+                ->visible(fn(Get $get) => !empty($get->get('type')))
                 ->columnSpanFull(),
 
             TextInput::make('order')
@@ -165,7 +166,7 @@ class FieldsRelationManager extends RelationManager
                     if ($record) {
                         return $record->order;
                     }
-                    
+
                     $maxOrder = $this->getOwnerRecord()->fields()->max('order');
                     return $maxOrder !== null ? $maxOrder + 1 : 0;
                 })

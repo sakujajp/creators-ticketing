@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\AutomationRules\RelationManagers;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\AutomationRules\RelationManagers;
 
 use Filament\Forms;
 use Filament\Tables;
@@ -19,7 +19,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Placeholder;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Resources\RelationManagers\RelationManager;
-use daacreators\CreatorsTicketing\Traits\HasTicketPermissions;
+use sakujajp\CreatorsTicketing\Traits\HasTicketPermissions;
 
 class AutomationLogsRelationManager extends RelationManager
 {
@@ -54,15 +54,15 @@ class AutomationLogsRelationManager extends RelationManager
                 TextColumn::make('ticket.title')
                     ->label(__('creators-ticketing::resources.logs.ticket'))
                     ->searchable()
-                    ->description(fn ($record) => $record->ticket ? 'ID: #' . $record->ticket->ticket_uid : 'Deleted Ticket')
+                    ->description(fn($record) => $record->ticket ? 'ID: #' . $record->ticket->ticket_uid : 'Deleted Ticket')
                     ->weight('medium')
                     ->wrap(),
 
                 TextColumn::make('trigger_event')
                     ->label(__('creators-ticketing::resources.logs.trigger'))
                     ->badge()
-                    ->formatStateUsing(fn ($state) => ucwords(str_replace('_', ' ', $state)))
-                    ->color(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn($state) => ucwords(str_replace('_', ' ', $state)))
+                    ->color(fn(string $state): string => match ($state) {
                         'ticket_created' => 'success',
                         'ticket_updated', 'status_changed' => 'info',
                         'priority_changed' => 'warning',
@@ -73,7 +73,7 @@ class AutomationLogsRelationManager extends RelationManager
                     ->label(__('creators-ticketing::resources.logs.executed_at'))
                     ->dateTime('M d, Y H:i:s')
                     ->sortable()
-                    ->description(fn ($record) => $record->created_at->diffForHumans())
+                    ->description(fn($record) => $record->created_at->diffForHumans())
                     ->color('gray'),
             ])
             ->filters([
@@ -89,17 +89,17 @@ class AutomationLogsRelationManager extends RelationManager
                     ->slideOver()
                     ->modalWidth('4xl')
                     ->mutateRecordDataUsing(function (array $data): array {
-                        $formatter = fn ($items) => collect($items ?? [])
-                            ->mapWithKeys(fn ($v, $k) => [
-                                ucwords(str_replace('_', ' ', $k)) => is_array($v) 
-                                    ? (empty($v) ? 'Any/None' : implode(', ', $v)) 
+                        $formatter = fn($items) => collect($items ?? [])
+                            ->mapWithKeys(fn($v, $k) => [
+                                ucwords(str_replace('_', ' ', $k)) => is_array($v)
+                                    ? (empty($v) ? 'Any/None' : implode(', ', $v))
                                     : ($v ?? 'N/A')
                             ])
                             ->toArray();
 
                         $data['conditions_formatted'] = $formatter($data['conditions_met'] ?? []);
                         $data['actions_formatted'] = $formatter($data['actions_performed'] ?? []);
-                        
+
                         return $data;
                     }),
             ])
@@ -116,7 +116,7 @@ class AutomationLogsRelationManager extends RelationManager
                         ->schema([
                             TextInput::make('trigger_event')
                                 ->label(__('creators-ticketing::resources.logs.trigger'))
-                                ->formatStateUsing(fn ($state) => ucwords(str_replace('_', ' ', $state)))
+                                ->formatStateUsing(fn($state) => ucwords(str_replace('_', ' ', $state)))
                                 ->disabled(),
 
                             TextInput::make('created_at')
@@ -125,22 +125,22 @@ class AutomationLogsRelationManager extends RelationManager
 
                             TextInput::make('success')
                                 ->label(__('creators-ticketing::resources.logs.status'))
-                                ->formatStateUsing(fn ($state) => $state ? __('creators-ticketing::resources.logs.success') : __('creators-ticketing::resources.logs.failed'))
-                                ->extraInputAttributes(fn ($state) => [
+                                ->formatStateUsing(fn($state) => $state ? __('creators-ticketing::resources.logs.success') : __('creators-ticketing::resources.logs.failed'))
+                                ->extraInputAttributes(fn($state) => [
                                     'class' => $state ? 'text-success-600 font-bold' : 'text-danger-600 font-bold',
                                 ])
                                 ->disabled(),
                         ]),
-                    
+
                     TextInput::make('ticket.title')
                         ->label(__('creators-ticketing::resources.logs.ticket'))
-                        ->prefix(fn ($record) => $record->ticket ? '#' . $record->ticket->ticket_uid : '#')
+                        ->prefix(fn($record) => $record->ticket ? '#' . $record->ticket->ticket_uid : '#')
                         ->disabled()
                         ->columnSpanFull(),
 
                     Textarea::make('error_message')
                         ->label(__('creators-ticketing::resources.logs.error'))
-                        ->visible(fn ($record) => !empty($record->error_message))
+                        ->visible(fn($record) => !empty($record->error_message))
                         ->rows(3)
                         ->extraAttributes(['class' => 'bg-red-50 text-red-700 border-red-200'])
                         ->columnSpanFull()

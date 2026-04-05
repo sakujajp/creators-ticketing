@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\TicketStatuses;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\TicketStatuses;
 
 use BackedEnum;
 use Filament\Tables;
@@ -19,15 +19,15 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Schemas\Components\Utilities\Set;
-use daacreators\CreatorsTicketing\Models\TicketStatus;
-use daacreators\CreatorsTicketing\Traits\HasTicketingNavGroup;
-use daacreators\CreatorsTicketing\Traits\HasNavigationVisibility;
-use daacreators\CreatorsTicketing\Filament\Resources\TicketStatuses\Pages;
+use sakujajp\CreatorsTicketing\Models\TicketStatus;
+use sakujajp\CreatorsTicketing\Traits\HasTicketingNavGroup;
+use sakujajp\CreatorsTicketing\Traits\HasNavigationVisibility;
+use sakujajp\CreatorsTicketing\Filament\Resources\TicketStatuses\Pages;
 
 class TicketStatusResource extends Resource
 {
     use HasNavigationVisibility, HasTicketingNavGroup;
-    
+
     protected static ?string $model = TicketStatus::class;
 
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-tag';
@@ -55,7 +55,7 @@ class TicketStatusResource extends Resource
                 ->required()
                 ->maxLength(255)
                 ->live(onBlur: true)
-                ->afterStateUpdated(fn (Set $set, ?string $state) => $set->set('slug', Str::slug($state))),
+                ->afterStateUpdated(fn(Set $set, ?string $state) => $set->set('slug', Str::slug($state))),
 
             TextInput::make('slug')
                 ->label(__('creators-ticketing::resources.ticket_status.slug'))

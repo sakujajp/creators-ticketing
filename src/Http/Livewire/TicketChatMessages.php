@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Http\Livewire;
+namespace sakujajp\CreatorsTicketing\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -45,7 +45,7 @@ class TicketChatMessages extends Component implements HasForms
 
     public function render()
     {
-        $this->loadReplies(); 
+        $this->loadReplies();
         return view('creators-ticketing::livewire.ticket-chat-messages');
     }
 }

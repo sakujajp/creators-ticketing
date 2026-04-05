@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Support;
+namespace sakujajp\CreatorsTicketing\Support;
 
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -15,7 +15,7 @@ class TicketFileHelper
 
         $filesArray = self::normalizeFilesToArray($files);
         self::ensureStorageDirectoryExists($ticketId);
-        
+
         return self::storeAllFiles($filesArray, $ticketId);
     }
 
@@ -32,7 +32,7 @@ class TicketFileHelper
     private static function ensureStorageDirectoryExists(string $ticketId): void
     {
         $directoryPath = "ticket-attachments/{$ticketId}";
-        
+
         if (!Storage::disk('private')->exists($directoryPath)) {
             Storage::disk('private')->makeDirectory($directoryPath);
             Storage::disk('private')->setVisibility($directoryPath, 'private');
@@ -58,10 +58,10 @@ class TicketFileHelper
     {
         $filename = $file->getClientOriginalName();
         $storagePath = "ticket-attachments/{$ticketId}/{$filename}";
-        
+
         Storage::disk('private')->put($storagePath, file_get_contents($file->getRealPath()));
         Storage::disk('private')->setVisibility($storagePath, 'private');
-        
+
         return $storagePath;
     }
 

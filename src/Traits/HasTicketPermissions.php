@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Traits;
+namespace sakujajp\CreatorsTicketing\Traits;
 
 use Filament\Facades\Filament;
 use Illuminate\Support\Facades\DB;
@@ -10,7 +10,7 @@ trait HasTicketPermissions
     protected function getUserPermissions()
     {
         $user = Filament::auth()->user();
-        
+
         if (!$user) {
             return [
                 'is_admin' => false,
@@ -63,7 +63,7 @@ trait HasTicketPermissions
     protected function canUserViewAllTickets(): bool
     {
         $perms = $this->getUserPermissions();
-        
+
         if ($perms['is_admin']) {
             return true;
         }
@@ -83,7 +83,7 @@ trait HasTicketPermissions
         return $perms['departments'];
     }
 
-    
+
     public static function canAccessNavigation(array $parameters = []): bool
     {
         $instance = new static();

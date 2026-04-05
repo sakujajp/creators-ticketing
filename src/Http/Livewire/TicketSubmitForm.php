@@ -1,23 +1,23 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Http\Livewire;
+namespace sakujajp\CreatorsTicketing\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\Url;
 use Livewire\WithFileUploads;
-use daacreators\CreatorsTicketing\Models\Form;
-use daacreators\CreatorsTicketing\Models\Ticket;
-use daacreators\CreatorsTicketing\Models\Department;
-use daacreators\CreatorsTicketing\Models\TicketStatus;
-use daacreators\CreatorsTicketing\Events\TicketCreated;
-use daacreators\CreatorsTicketing\Support\TicketFileHelper;
-use daacreators\CreatorsTicketing\Services\SpamFilterService;
+use sakujajp\CreatorsTicketing\Models\Form;
+use sakujajp\CreatorsTicketing\Models\Ticket;
+use sakujajp\CreatorsTicketing\Models\Department;
+use sakujajp\CreatorsTicketing\Models\TicketStatus;
+use sakujajp\CreatorsTicketing\Events\TicketCreated;
+use sakujajp\CreatorsTicketing\Support\TicketFileHelper;
+use sakujajp\CreatorsTicketing\Services\SpamFilterService;
 
 class TicketSubmitForm extends Component
 {
     use WithFileUploads;
 
-    #[Url(as: 'tab', except: 'new')] 
+    #[Url(as: 'tab', except: 'new')]
     public $activeTab = 'new';
 
     #[Url(as: 'ticket', except: '')]
@@ -28,10 +28,10 @@ class TicketSubmitForm extends Component
     public $custom_fields = [];
     public $form_fields = [];
     public $departments = [];
-    public $available_forms = []; 
+    public $available_forms = [];
     public $userTickets = [];
-    public $showForm = true; 
-    public $selectedTicket = null; 
+    public $showForm = true;
+    public $selectedTicket = null;
 
     public function mount()
     {
@@ -73,7 +73,7 @@ class TicketSubmitForm extends Component
         $this->selectedTicket = null;
     }
 
-     public function viewTicket($ticketId)
+    public function viewTicket($ticketId)
     {
         $this->selectedTicket = Ticket::with(['department', 'status', 'publicReplies.user'])
             ->where('id', $ticketId)
@@ -81,19 +81,19 @@ class TicketSubmitForm extends Component
             ->first();
 
         if ($this->selectedTicket) {
-             $this->activeTab = 'view';
-             $this->urlTicketId = $ticketId;
-             $this->showForm = false;
+            $this->activeTab = 'view';
+            $this->urlTicketId = $ticketId;
+            $this->showForm = false;
 
-             foreach ($this->selectedTicket->publicReplies as $r) {
-                 $r->markSeenBy(auth()->id());
-             }
-             $this->selectedTicket->markSeenBy(auth()->id());
+            foreach ($this->selectedTicket->publicReplies as $r) {
+                $r->markSeenBy(auth()->id());
+            }
+            $this->selectedTicket->markSeenBy(auth()->id());
         } else {
             $this->backToList();
         }
     }
-    
+
     public function backToList()
     {
         $this->loadUserTickets();
@@ -104,10 +104,12 @@ class TicketSubmitForm extends Component
     {
         $this->reset(['form_id', 'custom_fields', 'form_fields', 'available_forms']);
 
-        if (!$this->department_id) return;
+        if (!$this->department_id)
+            return;
 
         $department = Department::find($this->department_id);
-        if (!$department) return;
+        if (!$department)
+            return;
 
         $forms = $department->forms()->where('is_active', true)->get();
 
@@ -137,7 +139,8 @@ class TicketSubmitForm extends Component
 
     public function removeFile($fieldName, $index = null)
     {
-        if (!isset($this->custom_fields[$fieldName])) return;
+        if (!isset($this->custom_fields[$fieldName]))
+            return;
 
         if (is_array($this->custom_fields[$fieldName]) && $index !== null) {
             unset($this->custom_fields[$fieldName][$index]);
@@ -162,26 +165,24 @@ class TicketSubmitForm extends Component
             $key = "custom_fields.{$field['name']}";
 
             if ($field['type'] === 'file_multiple') {
-                
+
                 $parentRules = $field['is_required'] ? ['required', 'array'] : ['nullable', 'array'];
-                
+
                 $fileRules = ['file'];
 
                 if (!empty($field['validation_rules'])) {
                     $rawRules = explode('|', $field['validation_rules']);
-                    
+
                     foreach ($rawRules as $rule) {
                         $rule = trim($rule);
-                        
+
                         if (str_starts_with($rule, 'max_files:')) {
                             $count = explode(':', $rule)[1] ?? 5;
-                            $parentRules[] = "max:$count"; 
-                        } 
-                        elseif (str_starts_with($rule, 'min_files:')) {
+                            $parentRules[] = "max:$count";
+                        } elseif (str_starts_with($rule, 'min_files:')) {
                             $count = explode(':', $rule)[1] ?? 1;
                             $parentRules[] = "min:$count";
-                        } 
-                        else {
+                        } else {
                             $fileRules[] = $rule;
                         }
                     }
@@ -215,22 +216,28 @@ class TicketSubmitForm extends Component
 
         if (!empty($field['validation_rules'])) {
             $rawRules = explode('|', $field['validation_rules']);
-            
+
             foreach ($rawRules as $rule) {
                 $rule = trim($rule);
-                
+
 
                 if (str_starts_with($rule, 'max_files:') || str_starts_with($rule, 'min_files:')) {
                     continue;
                 }
-                
+
                 $rules[] = $rule;
             }
         } else {
             switch ($field['type']) {
-                case 'email': $rules[] = 'email'; break;
-                case 'number': $rules[] = 'numeric'; break;
-                case 'url': $rules[] = 'url'; break;
+                case 'email':
+                    $rules[] = 'email';
+                    break;
+                case 'number':
+                    $rules[] = 'numeric';
+                    break;
+                case 'url':
+                    $rules[] = 'url';
+                    break;
                 case 'file':
                 case 'file_multiple':
                     $rules[] = 'max:5120';
@@ -261,19 +268,19 @@ class TicketSubmitForm extends Component
 
         $spamService = app(SpamFilterService::class);
         $spamCheck = $spamService->checkTicket($this->custom_fields, auth()->user());
-        
+
         if (!$spamCheck['allowed']) {
             session()->flash('error', $spamCheck['reason'] ?? 'Your submission was blocked by spam filters.');
             return;
         }
 
         $maxTickets = config('creators-ticketing.max_open_tickets_per_user');
-            
+
         if ($maxTickets && $maxTickets > 0) {
             $openTicketsCount = Ticket::where('user_id', auth()->id())
                 ->whereHas('status', fn($q) => $q->where('is_closing_status', false))
                 ->count();
-            
+
             if ($openTicketsCount >= $maxTickets) {
                 session()->flash('error', config('creators-ticketing.ticket_limit_message'));
                 return;
@@ -283,9 +290,9 @@ class TicketSubmitForm extends Component
         $this->validate();
 
         $defaultStatus = TicketStatus::where('is_default_for_new', true)->first();
-        
+
         $tempCustomFields = $this->custom_fields;
-        
+
         foreach ($this->form_fields as $field) {
             if (in_array($field['type'], ['file', 'file_multiple'])) {
                 unset($tempCustomFields[$field['name']]);
@@ -306,15 +313,15 @@ class TicketSubmitForm extends Component
 
         foreach ($this->form_fields as $field) {
             if (in_array($field['type'], ['file', 'file_multiple']) && !empty($this->custom_fields[$field['name']])) {
-                
+
                 $files = $this->custom_fields[$field['name']];
-                
+
                 if (!is_array($files)) {
                     $files = [$files];
                 }
 
                 $storedPaths = TicketFileHelper::processUploadedFiles($files, $ticket->id);
-                
+
                 $finalCustomFields[$field['name']] = $storedPaths;
                 $hasFilesToUpload = true;
             }
@@ -329,7 +336,7 @@ class TicketSubmitForm extends Component
         session()->flash('success', 'Ticket submitted successfully!');
 
         $this->reset(['department_id', 'form_id', 'custom_fields', 'form_fields', 'available_forms']);
-        $this->showList(); 
+        $this->showList();
         $this->loadUserTickets();
     }
 

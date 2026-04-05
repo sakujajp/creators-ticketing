@@ -1,14 +1,14 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Services;
+namespace sakujajp\CreatorsTicketing\Services;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use daacreators\CreatorsTicketing\Models\Ticket;
-use daacreators\CreatorsTicketing\Models\AutomationRule;
-use daacreators\CreatorsTicketing\Models\AutomationLog;
-use daacreators\CreatorsTicketing\Enums\TicketPriority;
-use daacreators\CreatorsTicketing\Support\UserNameResolver;
+use sakujajp\CreatorsTicketing\Models\Ticket;
+use sakujajp\CreatorsTicketing\Models\AutomationRule;
+use sakujajp\CreatorsTicketing\Models\AutomationLog;
+use sakujajp\CreatorsTicketing\Enums\TicketPriority;
+use sakujajp\CreatorsTicketing\Support\UserNameResolver;
 
 class AutomationService
 {
@@ -28,7 +28,7 @@ class AutomationService
             try {
                 if ($this->evaluateConditions($ticket, $rule, $context)) {
                     $this->executeActions($ticket, $rule, $context);
-                    
+
                     if ($rule->stop_processing) {
                         break;
                     }
@@ -40,7 +40,7 @@ class AutomationService
                     'event' => $event,
                     'error' => $e->getMessage(),
                 ]);
-                
+
                 $this->logExecution($rule, $ticket, $event, [], [], false, $e->getMessage());
             }
         }
@@ -49,7 +49,7 @@ class AutomationService
     protected function evaluateConditions(Ticket $ticket, AutomationRule $rule, array $context): bool
     {
         $conditions = $rule->conditions;
-        
+
         // If conditions is null or strictly empty, allow the rule
         if (empty($conditions)) {
             return true;
@@ -133,7 +133,7 @@ class AutomationService
             foreach ($conditions['custom_fields'] as $fieldName => $expectedValue) {
                 $actualValue = $ticket->custom_fields[$fieldName] ?? null;
                 $expectedValue = $clean($expectedValue);
-                
+
                 if (is_array($expectedValue)) {
                     $conditionsMet["custom_field_{$fieldName}"] = in_array($actualValue, $expectedValue);
                 } else {
@@ -147,7 +147,7 @@ class AutomationService
         if (!empty($tags)) {
             $ticketTags = $ticket->tags ?? [];
             $requiredTags = is_array($tags) ? $tags : [$tags];
-            
+
             if (isset($conditions['tags_match_type']) && $conditions['tags_match_type'] === 'any') {
                 $conditionsMet['tags'] = !empty(array_intersect($ticketTags, $requiredTags));
             } else {
@@ -163,7 +163,7 @@ class AutomationService
 
         if (!empty($conditions['last_activity_within_hours'])) {
             $hoursAgo = now()->subHours($conditions['last_activity_within_hours']);
-            $conditionsMet['activity_within'] = $ticket->last_activity_at && 
+            $conditionsMet['activity_within'] = $ticket->last_activity_at &&
                 $ticket->last_activity_at->greaterThan($hoursAgo);
         }
 
@@ -198,7 +198,7 @@ class AutomationService
         $actionsPerformed = [];
 
         DB::beginTransaction();
-        
+
         try {
             $updates = [];
 
@@ -223,8 +223,10 @@ class AutomationService
                 }
             }
 
-            if (!empty($actions['transfer_to_department']) && 
-                $actions['transfer_to_department'] != $ticket->department_id) {
+            if (
+                !empty($actions['transfer_to_department']) &&
+                $actions['transfer_to_department'] != $ticket->department_id
+            ) {
                 $updates['department_id'] = $actions['transfer_to_department'];
                 $actionsPerformed['department_changed'] = $actions['transfer_to_department'];
             }
@@ -270,8 +272,14 @@ class AutomationService
             $rule->increment('times_triggered');
             $rule->update(['last_triggered_at' => now()]);
 
-            $this->logExecution($rule, $ticket, $rule->trigger_event, 
-                $rule->conditions, $actionsPerformed, true);
+            $this->logExecution(
+                $rule,
+                $ticket,
+                $rule->trigger_event,
+                $rule->conditions,
+                $actionsPerformed,
+                true
+            );
 
             $ticket->activities()->create([
                 'user_id' => null,
@@ -280,7 +288,7 @@ class AutomationService
             ]);
 
             DB::commit();
-            
+
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
@@ -332,7 +340,7 @@ class AutomationService
 
         $currentIndex = array_search($lastAssigned, $agents);
         $nextIndex = ($currentIndex + 1) % count($agents);
-        
+
         return $agents[$nextIndex];
     }
 

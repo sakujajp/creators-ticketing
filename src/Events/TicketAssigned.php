@@ -1,10 +1,10 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Events;
+namespace sakujajp\CreatorsTicketing\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use daacreators\CreatorsTicketing\Models\Ticket;
+use sakujajp\CreatorsTicketing\Models\Ticket;
 
 class TicketAssigned
 {
@@ -15,5 +15,6 @@ class TicketAssigned
         public ?int $oldAssigneeId,
         public ?int $newAssigneeId,
         public mixed $assignedBy
-    ) {}
+    ) {
+    }
 }

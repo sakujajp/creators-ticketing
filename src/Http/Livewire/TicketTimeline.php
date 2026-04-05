@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Http\Livewire;
+namespace sakujajp\CreatorsTicketing\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -27,11 +27,11 @@ class TicketTimeline extends Component implements HasForms
         $query = $this->ticket->activities()
             ->with('user')
             ->orderBy('created_at', 'desc');
-        
+
         if ($this->limit) {
             return $query->limit($this->limit)->get();
         }
-        
+
         return $query->simplePaginate($this->perPage);
     }
 

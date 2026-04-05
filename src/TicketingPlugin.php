@@ -1,16 +1,16 @@
 <?php
 
-namespace daacreators\CreatorsTicketing;
+namespace sakujajp\CreatorsTicketing;
 
 use Filament\Panel;
 use Filament\Contracts\Plugin;
-use daacreators\CreatorsTicketing\Filament\Resources\Forms\FormResource;
-use daacreators\CreatorsTicketing\Filament\Resources\Tickets\TicketResource;
-use daacreators\CreatorsTicketing\Filament\Resources\Departments\DepartmentResource;
-use daacreators\CreatorsTicketing\Filament\Resources\TicketStatuses\TicketStatusResource;
-use daacreators\CreatorsTicketing\Filament\Resources\AutomationRules\AutomationRuleResource;
-use daacreators\CreatorsTicketing\Filament\Resources\SpamFilters\SpamFilterResource;
-use daacreators\CreatorsTicketing\Filament\Resources\SpamLogs\SpamLogResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\Forms\FormResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\Tickets\TicketResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\Departments\DepartmentResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\TicketStatuses\TicketStatusResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\AutomationRules\AutomationRuleResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\SpamFilters\SpamFilterResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\SpamLogs\SpamLogResource;
 
 class TicketingPlugin implements Plugin
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Events;
+namespace sakujajp\CreatorsTicketing\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use daacreators\CreatorsTicketing\Models\Ticket;
-use daacreators\CreatorsTicketing\Models\TicketStatus;
+use sakujajp\CreatorsTicketing\Models\Ticket;
+use sakujajp\CreatorsTicketing\Models\TicketStatus;
 
 class TicketStatusChanged
 {
@@ -16,5 +16,6 @@ class TicketStatusChanged
         public ?TicketStatus $oldStatus,
         public TicketStatus $newStatus,
         public mixed $changedBy
-    ) {}
+    ) {
+    }
 }

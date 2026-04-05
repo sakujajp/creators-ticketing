@@ -1,14 +1,14 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Http\Livewire;
+namespace sakujajp\CreatorsTicketing\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\RateLimiter;
-use daacreators\CreatorsTicketing\Models\Ticket;
-use daacreators\CreatorsTicketing\Models\TicketReply;
-use daacreators\CreatorsTicketing\Events\TicketReplyAdded;
+use sakujajp\CreatorsTicketing\Models\Ticket;
+use sakujajp\CreatorsTicketing\Models\TicketReply;
+use sakujajp\CreatorsTicketing\Events\TicketReplyAdded;
 
 class PublicTicketChat extends Component
 {
@@ -19,8 +19,8 @@ class PublicTicketChat extends Component
     public $replies;
     public $message = '';
     public $attachments = [];
-    
-    public $lastReplyId = null; 
+
+    public $lastReplyId = null;
 
     public function mount($ticketId)
     {
@@ -29,9 +29,9 @@ class PublicTicketChat extends Component
             ->where('id', $ticketId)
             ->where('user_id', auth()->id())
             ->firstOrFail();
-            
+
         $this->ticket->markSeenBy(auth()->id());
-        
+
         $this->loadReplies();
     }
 
@@ -67,11 +67,11 @@ class PublicTicketChat extends Component
             $this->addError('message', "You are sending messages too fast. Please wait $seconds seconds.");
             return;
         }
-        
+
         RateLimiter::hit($key);
 
         $this->validate([
-            'message' => 'required|string|max:5000', 
+            'message' => 'required|string|max:5000',
         ]);
 
         $cleanMessage = strip_tags($this->message);
@@ -84,10 +84,10 @@ class PublicTicketChat extends Component
         ]);
 
         event(new TicketReplyAdded($this->ticket, $reply));
-        
+
         $this->message = '';
-        
-        $this->loadReplies(); 
+
+        $this->loadReplies();
     }
 
     #[On('$refresh')]

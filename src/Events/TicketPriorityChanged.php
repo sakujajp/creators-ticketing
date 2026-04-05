@@ -1,11 +1,11 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Events;
+namespace sakujajp\CreatorsTicketing\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use daacreators\CreatorsTicketing\Models\Ticket;
-use daacreators\CreatorsTicketing\Enums\TicketPriority;
+use sakujajp\CreatorsTicketing\Models\Ticket;
+use sakujajp\CreatorsTicketing\Enums\TicketPriority;
 
 class TicketPriorityChanged
 {
@@ -16,5 +16,6 @@ class TicketPriorityChanged
         public TicketPriority $oldPriority,
         public TicketPriority $newPriority,
         public mixed $changedBy
-    ) {}
+    ) {
+    }
 }

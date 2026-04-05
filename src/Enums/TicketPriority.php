@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Enums;
+namespace sakujajp\CreatorsTicketing\Enums;
 
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;

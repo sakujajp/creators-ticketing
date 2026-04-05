@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\TicketStatuses\Tables;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\TicketStatuses\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;

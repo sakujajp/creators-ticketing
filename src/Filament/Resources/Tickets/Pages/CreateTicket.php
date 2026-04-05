@@ -1,11 +1,11 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\Tickets\Pages;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\Tickets\Pages;
 
-use daacreators\CreatorsTicketing\Filament\Resources\Tickets\TicketResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\Tickets\TicketResource;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Storage;
-use daacreators\CreatorsTicketing\Models\Form;
+use sakujajp\CreatorsTicketing\Models\Form;
 
 class CreateTicket extends CreateRecord
 {
@@ -14,13 +14,14 @@ class CreateTicket extends CreateRecord
     protected function afterCreate(): void
     {
         $record = $this->getRecord();
-        
+
         $formId = $record->form_id;
         if (!$formId && $record->department) {
             $formId = $record->department->forms()->where('is_active', true)->first()?->id;
         }
 
-        if (!$formId) return;
+        if (!$formId)
+            return;
 
         $form = Form::with('fields')->find($formId);
         $customFields = $record->custom_fields ?? [];
@@ -29,10 +30,11 @@ class CreateTicket extends CreateRecord
 
         foreach ($form->fields as $field) {
             if (in_array($field->type, ['file', 'file_multiple'])) {
-                
+
                 $uploadedFiles = $customFields[$field->name] ?? null;
 
-                if (empty($uploadedFiles)) continue;
+                if (empty($uploadedFiles))
+                    continue;
 
                 $files = is_array($uploadedFiles) ? $uploadedFiles : [$uploadedFiles];
                 $newPaths = [];
@@ -40,7 +42,7 @@ class CreateTicket extends CreateRecord
 
                 foreach ($files as $filePath) {
                     if (str_contains($filePath, 'ticket-attachments/temp/')) {
-                        
+
                         $filename = basename($filePath);
                         $newPath = "ticket-attachments/{$record->id}/{$filename}";
 
@@ -49,7 +51,7 @@ class CreateTicket extends CreateRecord
                             $newPaths[] = $newPath;
                             $filesMoved = true;
                         } else {
-                            $newPaths[] = $filePath; 
+                            $newPaths[] = $filePath;
                         }
                     } else {
                         $newPaths[] = $filePath;

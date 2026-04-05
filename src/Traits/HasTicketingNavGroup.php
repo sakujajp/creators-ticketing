@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Traits;
+namespace sakujajp\CreatorsTicketing\Traits;
 
 trait HasTicketingNavGroup
 {

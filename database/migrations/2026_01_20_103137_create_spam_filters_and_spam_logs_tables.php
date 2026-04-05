@@ -3,10 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use daacreators\CreatorsTicketing\Support\UserForeignKey;
+use sakujajp\CreatorsTicketing\Support\UserForeignKey;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -25,7 +24,7 @@ return new class extends Migration
             $table->integer('hits')->default(0);
             $table->timestamp('last_triggered_at')->nullable();
             $table->timestamps();
-            
+
             $table->index(['type', 'is_active']);
             $table->index('priority');
         });
@@ -42,7 +41,7 @@ return new class extends Migration
             $table->text('matched_value')->nullable();
             $table->json('ticket_data')->nullable();
             $table->timestamps();
-            
+
             $table->index('created_at');
             $table->index(['email', 'created_at']);
         });

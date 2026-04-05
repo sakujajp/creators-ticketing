@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Http\Livewire;
+namespace sakujajp\CreatorsTicketing\Http\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Route;
@@ -25,14 +25,14 @@ class TicketAttachmentsDisplay extends Component
         }
 
         $filename = basename($file);
-        
+
         if (Route::has('creators-ticketing.attachment')) {
             return route('creators-ticketing.attachment', [
                 'ticketId' => $this->ticketId,
                 'filename' => $filename
             ]);
         }
-        
+
         return url('/private/ticket-attachments/' . $this->ticketId . '/' . $filename);
     }
 
@@ -41,7 +41,7 @@ class TicketAttachmentsDisplay extends Component
         if (!is_string($file)) {
             return false;
         }
-        
+
         $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
         return in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg']);
     }

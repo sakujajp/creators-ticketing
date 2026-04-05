@@ -1,10 +1,10 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\SpamFilters\Pages;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\SpamFilters\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
-use daacreators\CreatorsTicketing\Filament\Resources\SpamFilters\SpamFilterResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\SpamFilters\SpamFilterResource;
 
 class EditSpamFilter extends EditRecord
 {

@@ -1,26 +1,27 @@
 <?php
 
-namespace daacreators\CreatorsTicketing;
+namespace sakujajp\CreatorsTicketing;
 
 use Livewire\Livewire;
 use Filament\Support\Assets\Css;
 use Illuminate\Support\ServiceProvider;
 use Filament\Support\Facades\FilamentAsset;
-use daacreators\CreatorsTicketing\Models\Ticket;
-use daacreators\CreatorsTicketing\Observers\TicketObserver;
-use daacreators\CreatorsTicketing\Http\Livewire\TicketTimeline;
-use daacreators\CreatorsTicketing\Http\Livewire\PublicTicketChat;
-use daacreators\CreatorsTicketing\Http\Livewire\TicketSubmitForm;
-use daacreators\CreatorsTicketing\Http\Livewire\TicketChatMessages;
-use daacreators\CreatorsTicketing\Filament\Widgets\TicketStatsWidget;
-use daacreators\CreatorsTicketing\Http\Livewire\TicketAttachmentsDisplay;
+use sakujajp\CreatorsTicketing\Models\Ticket;
+use sakujajp\CreatorsTicketing\Observers\TicketObserver;
+use sakujajp\CreatorsTicketing\Http\Livewire\TicketTimeline;
+use sakujajp\CreatorsTicketing\Http\Livewire\PublicTicketChat;
+use sakujajp\CreatorsTicketing\Http\Livewire\TicketSubmitForm;
+use sakujajp\CreatorsTicketing\Http\Livewire\TicketChatMessages;
+use sakujajp\CreatorsTicketing\Filament\Widgets\TicketStatsWidget;
+use sakujajp\CreatorsTicketing\Http\Livewire\TicketAttachmentsDisplay;
 
 class TicketingServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/creators-ticketing.php', 'creators-ticketing'
+            __DIR__ . '/../config/creators-ticketing.php',
+            'creators-ticketing'
         );
     }
 
@@ -34,7 +35,7 @@ class TicketingServiceProvider extends ServiceProvider
         ], 'creators-ticketing-translations');
 
         $this->publishes([
-            __DIR__.'/../config/creators-ticketing.php' => config_path('creators-ticketing.php'),
+            __DIR__ . '/../config/creators-ticketing.php' => config_path('creators-ticketing.php'),
         ], 'creators-ticketing-config');
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -48,13 +49,13 @@ class TicketingServiceProvider extends ServiceProvider
         $this->registerPrivateDisk();
 
         $this->ensureStorageDirectoryExists();
-        
+
         $this->registerEvents();
     }
 
     protected function registerEvents(): void
     {
-        
+
     }
 
     protected function registerPrivateDisk(): void
@@ -86,10 +87,10 @@ class TicketingServiceProvider extends ServiceProvider
     {
         FilamentAsset::register([
             Css::make('creators-ticketing', __DIR__ . '/../resources/dist/app.css'),
-        ], 'daacreators/creators-ticketing');
-        
+        ], 'sakujajp/creators-ticketing');
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'creators-ticketing');
+
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'creators-ticketing');
 
         Livewire::component('creators-ticketing.ticket-submit-form', TicketSubmitForm::class);
 
@@ -102,6 +103,6 @@ class TicketingServiceProvider extends ServiceProvider
         Livewire::component('creators-ticketing.ticket-timeline', TicketTimeline::class);
 
         Livewire::component('creators-ticketing.filament.widgets.ticket-stats-widget', TicketStatsWidget::class);
-        
+
     }
 }

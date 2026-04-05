@@ -1,8 +1,8 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Database\Seeders;
+namespace sakujajp\CreatorsTicketing\Database\Seeders;
 
-use daacreators\CreatorsTicketing\Models\TicketStatus;
+use sakujajp\CreatorsTicketing\Models\TicketStatus;
 use Illuminate\Database\Seeder;
 
 class TicketStatusSeeder extends Seeder

@@ -1,10 +1,10 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\Departments\Pages;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\Departments\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
-use daacreators\CreatorsTicketing\Filament\Resources\Departments\DepartmentResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\Departments\DepartmentResource;
 
 class EditDepartment extends EditRecord
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Support;
+namespace sakujajp\CreatorsTicketing\Support;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 
@@ -8,7 +8,7 @@ class UserNameResolver
 {
     public static function resolve(?Authenticatable $user): string
     {
-        if (! $user) {
+        if (!$user) {
             return 'System';
         }
 

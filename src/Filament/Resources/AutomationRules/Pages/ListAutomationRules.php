@@ -1,10 +1,10 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\AutomationRules\Pages;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\AutomationRules\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
-use daacreators\CreatorsTicketing\Filament\Resources\AutomationRules\AutomationRuleResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\AutomationRules\AutomationRuleResource;
 
 class ListAutomationRules extends ListRecords
 {

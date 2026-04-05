@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Events;
+namespace sakujajp\CreatorsTicketing\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -13,5 +13,6 @@ class TicketDeleted
         public int $ticketId,
         public string $ticketUid,
         public mixed $deletedBy
-    ) {}
+    ) {
+    }
 }

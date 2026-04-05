@@ -1,6 +1,6 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Support;
+namespace sakujajp\CreatorsTicketing\Support;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;

@@ -1,13 +1,13 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Models;
+namespace sakujajp\CreatorsTicketing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use daacreators\CreatorsTicketing\Enums\TicketPriority;
+use sakujajp\CreatorsTicketing\Enums\TicketPriority;
 
 class Ticket extends Model
 {
@@ -112,7 +112,7 @@ class Ticket extends Model
     {
         return !$this->is_seen;
     }
-    
+
     public function getCustomField(string $fieldName)
     {
         return $this->custom_fields[$fieldName] ?? null;
@@ -149,7 +149,7 @@ class Ticket extends Model
         if (empty($departmentIds)) {
             return $query->where(function ($q) use ($userId) {
                 $q->where('user_id', $userId)
-                  ->orWhere('assignee_id', $userId);
+                    ->orWhere('assignee_id', $userId);
             });
         }
 
@@ -161,8 +161,8 @@ class Ticket extends Model
 
         return $query->where(function ($q) use ($userId, $departmentIds, $canViewAllDepartments) {
             $q->where('user_id', $userId)
-              ->orWhere('assignee_id', $userId)
-              ->orWhereIn('department_id', $canViewAllDepartments);
+                ->orWhere('assignee_id', $userId)
+                ->orWhereIn('department_id', $canViewAllDepartments);
         });
     }
 
@@ -171,7 +171,7 @@ class Ticket extends Model
         return Attribute::make(
             get: function () {
                 $form = $this->department?->forms()->with('fields')->first();
-                
+
                 if (!$form || !$this->custom_fields) {
                     return 'Ticket #' . $this->ticket_uid;
                 }
@@ -203,7 +203,7 @@ class Ticket extends Model
         return Attribute::make(
             get: function () {
                 $form = $this->department?->forms()->with('fields')->first();
-                
+
                 if (!$form || !$this->custom_fields) {
                     return '';
                 }

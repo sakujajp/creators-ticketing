@@ -1,10 +1,10 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\Departments\Pages;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\Departments\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
-use daacreators\CreatorsTicketing\Filament\Resources\Departments\DepartmentResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\Departments\DepartmentResource;
 
 class ListDepartments extends ListRecords
 {

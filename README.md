@@ -1,7 +1,7 @@
 # Creators Ticketing for Filament
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/daacreators/creators-ticketing.svg)](https://packagist.org/packages/daacreators/creators-ticketing)
-[![Total Downloads](https://img.shields.io/packagist/dt/daacreators/creators-ticketing.svg)](https://packagist.org/packages/daacreators/creators-ticketing)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/sakujajp/creators-ticketing.svg)](https://packagist.org/packages/sakujajp/creators-ticketing)
+[![Total Downloads](https://img.shields.io/packagist/dt/sakujajp/creators-ticketing.svg)](https://packagist.org/packages/sakujajp/creators-ticketing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
 A robust and dynamic ticketing system plugin for Filament, providing a complete helpdesk solution for your Laravel application.
@@ -9,7 +9,7 @@ A robust and dynamic ticketing system plugin for Filament, providing a complete 
 ---
 
 ### Need a Helpdesk for Your Shopify Store?
-<img src="screenshots/hepdesk-logo.png" alt="Creators Helpdesk" height="80" style="vertical-align: middle;"> **[Creators Helpdesk](https://apps.shopify.com/daacreators-helpdesk)** – A modern, lightweight helpdesk for Shopify merchants. Try it free for 14 days.
+<img src="screenshots/hepdesk-logo.png" alt="Creators Helpdesk" height="80" style="vertical-align: middle;"> **[Creators Helpdesk](https://apps.shopify.com/sakujajp-helpdesk)** – A modern, lightweight helpdesk for Shopify merchants. Try it free for 14 days.
 
 ---
 
@@ -64,7 +64,7 @@ A robust and dynamic ticketing system plugin for Filament, providing a complete 
 
 You can install the package via composer:
 ```bash
-composer require daacreators/creators-ticketing
+composer require sakujajp/creators-ticketing
 ```
 
 After installation, publish the config file:
@@ -83,7 +83,7 @@ Open your AdminPanelProvider.php file and modify the panel() method as shown bel
 ```php
 use Filament\Panel;
 use Filament\PanelProvider;
-use daacreators\CreatorsTicketing\TicketingPlugin;
+use sakujajp\CreatorsTicketing\TicketingPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -107,7 +107,7 @@ php artisan migrate
 
 After running migrations, you can seed default ticket statuses using the provided seeder:
 ```bash
-php artisan db:seed --class=daacreators\\CreatorsTicketing\\Database\\Seeders\\TicketStatusSeeder
+php artisan db:seed --class=sakujajp\\CreatorsTicketing\\Database\\Seeders\\TicketStatusSeeder
 ```
 
 This will create the following default ticket statuses:
@@ -221,7 +221,7 @@ To add the tickets and ticket submission form to your frontend:
 
 The package includes a ticket statistics widget. Add it to your Filament dashboard:
 ```php
-use daacreators\CreatorsTicketing\Filament\Widgets\TicketStatsWidget;
+use sakujajp\CreatorsTicketing\Filament\Widgets\TicketStatsWidget;
 
 class DashboardConfig extends Config
 {
@@ -240,7 +240,7 @@ The plugin dispatches events for major ticket actions, allowing you to extend fu
 
 ### Available Events
 
-All events are located in the `daacreators\CreatorsTicketing\Events` namespace:
+All events are located in the `sakujajp\CreatorsTicketing\Events` namespace:
 
 | Event | Triggered When | Properties |
 |-------|---------------|------------|
@@ -255,11 +255,11 @@ All events are located in the `daacreators\CreatorsTicketing\Events` namespace:
 | `TicketDeleted` | Ticket is deleted | `int $ticketId`, `string $ticketUid`, `?User $deletedBy` |
 
 **Model Classes:**
-- `Ticket` → `daacreators\CreatorsTicketing\Models\Ticket`
-- `TicketStatus` → `daacreators\CreatorsTicketing\Models\TicketStatus`
-- `TicketReply` → `daacreators\CreatorsTicketing\Models\TicketReply`
-- `Department` → `daacreators\CreatorsTicketing\Models\Department`
-- `TicketPriority` → `daacreators\CreatorsTicketing\Enums\TicketPriority` (Enum)
+- `Ticket` → `sakujajp\CreatorsTicketing\Models\Ticket`
+- `TicketStatus` → `sakujajp\CreatorsTicketing\Models\TicketStatus`
+- `TicketReply` → `sakujajp\CreatorsTicketing\Models\TicketReply`
+- `Department` → `sakujajp\CreatorsTicketing\Models\Department`
+- `TicketPriority` → `sakujajp\CreatorsTicketing\Enums\TicketPriority` (Enum)
 - `User` → Your configured user model (default: `App\Models\User`)
 
 > **Note:** Properties marked with `?` are nullable and may be `null` in certain contexts.
@@ -373,4 +373,4 @@ The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
 If you discover any security-related issues, please email hello@jabirkhan.com.
 
-**Built with ❤️ by [DAA Creators](https://daacreators.com)**
+**Built with ❤️ by [DAA Creators](https://sakujajp.com)**

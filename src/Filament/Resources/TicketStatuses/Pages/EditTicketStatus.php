@@ -1,8 +1,8 @@
 <?php
 
-namespace daacreators\CreatorsTicketing\Filament\Resources\TicketStatuses\Pages;
+namespace sakujajp\CreatorsTicketing\Filament\Resources\TicketStatuses\Pages;
 
-use daacreators\CreatorsTicketing\Filament\Resources\TicketStatuses\TicketStatusResource;
+use sakujajp\CreatorsTicketing\Filament\Resources\TicketStatuses\TicketStatusResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 

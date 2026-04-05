@@ -140,7 +140,7 @@ class AutomationRuleResource extends Resource
                                     }
 
                                     $maxOrder = AutomationRule::where('trigger_event', $state)->max('execution_order');
-                                    $set->set('execution_order', $maxOrder !== null ? $maxOrder + 1 : 0);
+                                    $set('execution_order', $maxOrder !== null ? $maxOrder + 1 : 0);
                                 })
                                 ->options([
                                     'ticket_created' => __('creators-ticketing::resources.automation.triggers.ticket_created'),
@@ -177,9 +177,9 @@ class AutomationRuleResource extends Resource
                                         ->searchable()
                                         ->preload()
                                         ->live()
-                                        ->afterStateUpdated(fn(Set $set) => $set->set('conditions.form_id', null))
-                                        ->afterStateUpdated(fn(Set $set) => $set->set('conditions.assignee_id', null))
-                                        ->afterStateUpdated(fn(Set $set) => $set->set('actions.assign_to', null)),
+                                        ->afterStateUpdated(fn(Set $set) => $set('conditions.form_id', null))
+                                        ->afterStateUpdated(fn(Set $set) => $set('conditions.assignee_id', null))
+                                        ->afterStateUpdated(fn(Set $set) => $set('actions.assign_to', null)),
 
                                     Select::make('conditions.form_id')
                                         ->label(__('creators-ticketing::resources.automation.conditions.form'))

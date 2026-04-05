@@ -181,8 +181,8 @@ class TicketResource extends Resource
                             ->visible(fn(?Model $record) => $record === null)
                             ->live()
                             ->afterStateUpdated(function (Set $set) {
-                                $set->set('form_id', null);
-                                $set->set('custom_fields', []);
+                                $set('form_id', null);
+                                $set('custom_fields', []);
                             }),
 
                         Select::make('form_id')
@@ -212,7 +212,7 @@ class TicketResource extends Resource
                             )
                             ->live()
                             ->afterStateUpdated(function (Set $set) {
-                                $set->set('custom_fields', []);
+                                $set('custom_fields', []);
                             })
                             ->default(function (Get $get) {
                                 $departmentId = $get('department_id');

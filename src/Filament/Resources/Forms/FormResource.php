@@ -51,7 +51,7 @@ class FormResource extends Resource
                 ->required()
                 ->maxLength(255)
                 ->live(onBlur: true)
-                ->afterStateUpdated(fn(Set $set, ?string $state) => $set->set('slug', Str::slug($state))),
+                ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
 
             TextInput::make('slug')
                 ->label(__('creators-ticketing::resources.form.slug'))

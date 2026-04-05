@@ -120,11 +120,11 @@ class FieldsRelationManager extends RelationManager
                 ->live()
                 ->afterStateUpdated(function ($state, Set $set, Get $get) {
                     if (!in_array($state, ['select', 'radio'])) {
-                        $set->set('options', null);
+                        $set('options', null);
                     }
 
                     if (in_array($state, ['file', 'file_multiple']) && empty($get('validation_rules'))) {
-                        $set->set('validation_rules', 'mimes:jpg,jpeg,png,pdf,doc,docx|max:5120');
+                        $set('validation_rules', 'mimes:jpg,jpeg,png,pdf,doc,docx|max:5120');
                     }
                 }),
 

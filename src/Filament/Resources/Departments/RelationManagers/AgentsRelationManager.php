@@ -161,50 +161,50 @@ class AgentsRelationManager extends RelationManager
                             ->live()
                             ->afterStateUpdated(function (Set $set, $state) {
                                 if ($state === 'admin') {
-                                    $set->set('can_create_tickets', true);
-                                    $set->set('can_view_all_tickets', true);
-                                    $set->set('can_assign_tickets', true);
-                                    $set->set('can_change_departments', true);
-                                    $set->set('can_change_status', true);
-                                    $set->set('can_change_priority', true);
-                                    $set->set('can_delete_tickets', true);
-                                    $set->set('can_reply_to_tickets', true);
-                                    $set->set('can_add_internal_notes', true);
-                                    $set->set('can_view_internal_notes', true);
-                                    $set->set('can_manage_automations', true);
-                                    $set->set('can_view_automation_logs', true);
-                                    $set->set('can_manage_spam_filters', true);
-                                    $set->set('can_view_spam_logs', true);
+                                    $set('can_create_tickets', true);
+                                    $set('can_view_all_tickets', true);
+                                    $set('can_assign_tickets', true);
+                                    $set('can_change_departments', true);
+                                    $set('can_change_status', true);
+                                    $set('can_change_priority', true);
+                                    $set('can_delete_tickets', true);
+                                    $set('can_reply_to_tickets', true);
+                                    $set('can_add_internal_notes', true);
+                                    $set('can_view_internal_notes', true);
+                                    $set('can_manage_automations', true);
+                                    $set('can_view_automation_logs', true);
+                                    $set('can_manage_spam_filters', true);
+                                    $set('can_view_spam_logs', true);
                                 } elseif ($state === 'editor') {
-                                    $set->set('can_create_tickets', false);
-                                    $set->set('can_view_all_tickets', true);
-                                    $set->set('can_assign_tickets', true);
-                                    $set->set('can_change_departments', false);
-                                    $set->set('can_change_status', true);
-                                    $set->set('can_change_priority', true);
-                                    $set->set('can_delete_tickets', false);
-                                    $set->set('can_reply_to_tickets', true);
-                                    $set->set('can_add_internal_notes', true);
-                                    $set->set('can_view_internal_notes', true);
-                                    $set->set('can_manage_automations', true);
-                                    $set->set('can_view_automation_logs', false);
-                                    $set->set('can_manage_spam_filters', false);
-                                    $set->set('can_view_spam_logs', false);
+                                    $set('can_create_tickets', false);
+                                    $set('can_view_all_tickets', true);
+                                    $set('can_assign_tickets', true);
+                                    $set('can_change_departments', false);
+                                    $set('can_change_status', true);
+                                    $set('can_change_priority', true);
+                                    $set('can_delete_tickets', false);
+                                    $set('can_reply_to_tickets', true);
+                                    $set('can_add_internal_notes', true);
+                                    $set('can_view_internal_notes', true);
+                                    $set('can_manage_automations', true);
+                                    $set('can_view_automation_logs', false);
+                                    $set('can_manage_spam_filters', false);
+                                    $set('can_view_spam_logs', false);
                                 } elseif ($state === 'agent') {
-                                    $set->set('can_create_tickets', false);
-                                    $set->set('can_view_all_tickets', false);
-                                    $set->set('can_assign_tickets', false);
-                                    $set->set('can_change_departments', false);
-                                    $set->set('can_change_status', true);
-                                    $set->set('can_change_priority', true);
-                                    $set->set('can_delete_tickets', false);
-                                    $set->set('can_reply_to_tickets', true);
-                                    $set->set('can_add_internal_notes', false);
-                                    $set->set('can_view_internal_notes', true);
-                                    $set->set('can_manage_automations', false);
-                                    $set->set('can_view_automation_logs', false);
-                                    $set->set('can_manage_spam_filters', false);
-                                    $set->set('can_view_spam_logs', false);
+                                    $set('can_create_tickets', false);
+                                    $set('can_view_all_tickets', false);
+                                    $set('can_assign_tickets', false);
+                                    $set('can_change_departments', false);
+                                    $set('can_change_status', true);
+                                    $set('can_change_priority', true);
+                                    $set('can_delete_tickets', false);
+                                    $set('can_reply_to_tickets', true);
+                                    $set('can_add_internal_notes', false);
+                                    $set('can_view_internal_notes', true);
+                                    $set('can_manage_automations', false);
+                                    $set('can_view_automation_logs', false);
+                                    $set('can_manage_spam_filters', false);
+                                    $set('can_view_spam_logs', false);
                                 }
                             })
                             ->required(),
@@ -331,50 +331,50 @@ class AgentsRelationManager extends RelationManager
                                 ->live()
                                 ->afterStateUpdated(function (Set $set, $state) {
                                     if ($state === 'admin') {
-                                        $set->set('can_create_tickets', true);
-                                        $set->set('can_view_all_tickets', true);
-                                        $set->set('can_assign_tickets', true);
-                                        $set->set('can_change_departments', true);
-                                        $set->set('can_change_status', true);
-                                        $set->set('can_change_priority', true);
-                                        $set->set('can_delete_tickets', true);
-                                        $set->set('can_reply_to_tickets', true);
-                                        $set->set('can_add_internal_notes', true);
-                                        $set->set('can_view_internal_notes', true);
-                                        $set->set('can_manage_automations', true);
-                                        $set->set('can_view_automation_logs', true);
-                                        $set->set('can_manage_spam_filters', true);
-                                        $set->set('can_view_spam_logs', true);
+                                        $set('can_create_tickets', true);
+                                        $set('can_view_all_tickets', true);
+                                        $set('can_assign_tickets', true);
+                                        $set('can_change_departments', true);
+                                        $set('can_change_status', true);
+                                        $set('can_change_priority', true);
+                                        $set('can_delete_tickets', true);
+                                        $set('can_reply_to_tickets', true);
+                                        $set('can_add_internal_notes', true);
+                                        $set('can_view_internal_notes', true);
+                                        $set('can_manage_automations', true);
+                                        $set('can_view_automation_logs', true);
+                                        $set('can_manage_spam_filters', true);
+                                        $set('can_view_spam_logs', true);
                                     } elseif ($state === 'editor') {
-                                        $set->set('can_create_tickets', false);
-                                        $set->set('can_view_all_tickets', true);
-                                        $set->set('can_assign_tickets', true);
-                                        $set->set('can_change_departments', false);
-                                        $set->set('can_change_status', true);
-                                        $set->set('can_change_priority', true);
-                                        $set->set('can_delete_tickets', false);
-                                        $set->set('can_reply_to_tickets', true);
-                                        $set->set('can_add_internal_notes', true);
-                                        $set->set('can_view_internal_notes', true);
-                                        $set->set('can_manage_automations', true);
-                                        $set->set('can_view_automation_logs', false);
-                                        $set->set('can_manage_spam_filters', false);
-                                        $set->set('can_view_spam_logs', false);
+                                        $set('can_create_tickets', false);
+                                        $set('can_view_all_tickets', true);
+                                        $set('can_assign_tickets', true);
+                                        $set('can_change_departments', false);
+                                        $set('can_change_status', true);
+                                        $set('can_change_priority', true);
+                                        $set('can_delete_tickets', false);
+                                        $set('can_reply_to_tickets', true);
+                                        $set('can_add_internal_notes', true);
+                                        $set('can_view_internal_notes', true);
+                                        $set('can_manage_automations', true);
+                                        $set('can_view_automation_logs', false);
+                                        $set('can_manage_spam_filters', false);
+                                        $set('can_view_spam_logs', false);
                                     } elseif ($state === 'agent') {
-                                        $set->set('can_create_tickets', false);
-                                        $set->set('can_view_all_tickets', false);
-                                        $set->set('can_assign_tickets', false);
-                                        $set->set('can_change_departments', false);
-                                        $set->set('can_change_status', true);
-                                        $set->set('can_change_priority', true);
-                                        $set->set('can_delete_tickets', false);
-                                        $set->set('can_reply_to_tickets', true);
-                                        $set->set('can_add_internal_notes', false);
-                                        $set->set('can_view_internal_notes', true);
-                                        $set->set('can_manage_automations', false);
-                                        $set->set('can_view_automation_logs', false);
-                                        $set->set('can_manage_spam_filters', false);
-                                        $set->set('can_view_spam_logs', false);
+                                        $set('can_create_tickets', false);
+                                        $set('can_view_all_tickets', false);
+                                        $set('can_assign_tickets', false);
+                                        $set('can_change_departments', false);
+                                        $set('can_change_status', true);
+                                        $set('can_change_priority', true);
+                                        $set('can_delete_tickets', false);
+                                        $set('can_reply_to_tickets', true);
+                                        $set('can_add_internal_notes', false);
+                                        $set('can_view_internal_notes', true);
+                                        $set('can_manage_automations', false);
+                                        $set('can_view_automation_logs', false);
+                                        $set('can_manage_spam_filters', false);
+                                        $set('can_view_spam_logs', false);
                                     }
                                 })
                                 ->required(),

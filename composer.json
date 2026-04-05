@@ -17,14 +17,14 @@
     },
     "autoload": {
         "psr-4": {
-            "daacreators\\CreatorsTicketing\\": "src/",
-            "daacreators\\CreatorsTicketing\\Database\\Seeders\\": "database/seeders/"
+            "sakujajp\\CreatorsTicketing\\": "src/",
+            "sakujajp\\CreatorsTicketing\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "daacreators\\CreatorsTicketing\\TicketingServiceProvider"
+                "sakujajp\\CreatorsTicketing\\TicketingServiceProvider"
             ]
         }
     },
